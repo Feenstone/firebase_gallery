@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kt_dart/collection.dart';
@@ -32,27 +31,19 @@ class _AddPhotoInforamationScreenState
       create: (_) => FormTags(),
       child: BlocConsumer<PhotoFormBloc, PhotoFormState>(
           listenWhen: (p, c) =>
-          p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
+              p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
           listener: (context, state) {
             state.saveFailureOrSuccessOption.fold(
-                    () {},
-                    (either) =>
-                    either.fold(
-                            (l) => null,
-                            (_) =>
-                            ExtendedNavigator.of(context)
-                                .replace(Routes.galleryPage)));
+                () {},
+                (either) => either.fold(
+                    (l) => null,
+                    (_) => ExtendedNavigator.of(context)
+                        .replace(Routes.galleryPage)));
           },
           builder: (context, state) {
             return Scaffold(
               backgroundColor: Color(0xFFF3F3F3),
-              appBar: AddPhotoInformationAppBar(callback: () async {
-                FirebaseStorage _storage = FirebaseStorage.instance;
-                Reference _rootReference = _storage.ref().child('photos');
-                UploadTask task = _rootReference.putFile(state.photoFile);
-                String downloadUrl = await (await task).ref.getDownloadURL();
-                context.read<PhotoFormBloc>().add(const PhotoFormEvent.saved());
-              }),
+              appBar: AddPhotoInformationAppBar(callback: () => context.read<PhotoFormBloc>().add(const PhotoFormEvent.saved())),
               body: Form(
                 autovalidateMode: state.showErrorMessages,
                 child: CustomScrollView(slivers: [
@@ -65,10 +56,7 @@ class _AddPhotoInforamationScreenState
                         ),
                         Container(
                           height: 250,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
+                          width: MediaQuery.of(context).size.width,
                           child: FittedBox(
                             fit: BoxFit.fill,
                             child: Image.file(state.photoFile),
@@ -104,25 +92,23 @@ class _AddPhotoInforamationScreenState
                                             fontSize: 17),
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                          BorderRadius.circular(4),
+                                              BorderRadius.circular(4),
                                         ),
                                       ),
                                       onChanged: (val) {
                                         context.read<PhotoFormBloc>().add(
                                             PhotoFormEvent.nameChanged(val));
                                       },
-                                      validator: (val) =>
-                                          context
-                                              .read<PhotoFormBloc>()
-                                              .state
-                                              .photo
-                                              .name
-                                              .value
-                                              .fold(
-                                                  (f) =>
-                                                  f.maybeMap(
-                                                      orElse: () => null),
-                                                  (r) => null),
+                                      validator: (val) => context
+                                          .read<PhotoFormBloc>()
+                                          .state
+                                          .photo
+                                          .name
+                                          .value
+                                          .fold(
+                                              (f) => f.maybeMap(
+                                                  orElse: () => null),
+                                              (r) => null),
                                       onFieldSubmitted: (term) {},
                                     ),
                                     SizedBox(
@@ -140,7 +126,7 @@ class _AddPhotoInforamationScreenState
                                             fontSize: 17),
                                         border: OutlineInputBorder(
                                           borderRadius:
-                                          BorderRadius.circular(4),
+                                              BorderRadius.circular(4),
                                         ),
                                       ),
                                       onChanged: (val) {
@@ -148,18 +134,16 @@ class _AddPhotoInforamationScreenState
                                             PhotoFormEvent.descriptionChanged(
                                                 val));
                                       },
-                                      validator: (val) =>
-                                          context
-                                              .read<PhotoFormBloc>()
-                                              .state
-                                              .photo
-                                              .description
-                                              .value
-                                              .fold(
-                                                  (f) =>
-                                                  f.maybeMap(
-                                                      orElse: () => null),
-                                                  (r) => null),
+                                      validator: (val) => context
+                                          .read<PhotoFormBloc>()
+                                          .state
+                                          .photo
+                                          .description
+                                          .value
+                                          .fold(
+                                              (f) => f.maybeMap(
+                                                  orElse: () => null),
+                                              (r) => null),
                                     ),
                                     SizedBox(
                                       height: 25,
@@ -176,8 +160,7 @@ class _AddPhotoInforamationScreenState
                                               .getOrCrash()
                                               .asMap()
                                               .map(
-                                                (i, tag) =>
-                                                MapEntry(
+                                                (i, tag) => MapEntry(
                                                   i,
                                                   RemovableTagDisplay(
                                                     tag: tag,
@@ -187,13 +170,13 @@ class _AddPhotoInforamationScreenState
                                                       context
                                                           .read<PhotoFormBloc>()
                                                           .add(PhotoFormEvent
-                                                          .tagsChanged(context
-                                                          .formTags));
+                                                              .tagsChanged(context
+                                                                  .formTags));
                                                       setState(() {});
                                                     },
                                                   ),
                                                 ),
-                                          )
+                                              )
                                               .values
                                               .toList(),
                                           Container(
@@ -201,12 +184,12 @@ class _AddPhotoInforamationScreenState
                                             height: 35,
                                             child: TextFormField(
                                                 controller:
-                                                _textEditingController,
+                                                    _textEditingController,
                                                 decoration: InputDecoration(
                                                     border: OutlineInputBorder(
                                                         borderRadius:
-                                                        BorderRadius
-                                                            .circular(16)),
+                                                            BorderRadius
+                                                                .circular(16)),
                                                     prefixIcon: Icon(Icons.add),
                                                     hintText: "New"),
                                                 onFieldSubmitted: (val) {
@@ -215,8 +198,8 @@ class _AddPhotoInforamationScreenState
                                                   context
                                                       .read<PhotoFormBloc>()
                                                       .add(PhotoFormEvent
-                                                      .tagsChanged(context
-                                                      .formTags));
+                                                          .tagsChanged(context
+                                                              .formTags));
                                                   _textEditingController
                                                       .clear();
                                                   setState(() {});
