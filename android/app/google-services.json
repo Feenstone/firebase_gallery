@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "346325263163",
+    "firebase_url": "https://simplefirebasegalley.firebaseio.com",
+    "project_id": "simplefirebasegalley",
+    "storage_bucket": "simplefirebasegalley.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346325263163:android:01e9d0a08b6fe7595e8d1e",
+        "android_client_info": {
+          "package_name": "com.example.simple_firebase_gallery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346325263163-sbgtqei5672o965jbffouf93a7colvqa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnx2q52Y_UjQSPvabn1pVQpQFUEq3wwGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346325263163-sbgtqei5672o965jbffouf93a7colvqa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
